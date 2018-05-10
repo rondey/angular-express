@@ -1,8 +1,5 @@
 import * as express from 'express';
 import { routes } from './routes';
-import { first } from './lesson2/first';
-import { Vip } from './lesson2/second';
-import { GotCharacter } from './lesson2/third';
 
 export const app = express();
 
