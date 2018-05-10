@@ -2,7 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
+import { GuestbookComponent } from './guestbook.component';
+import { PageNotFoundComponent } from './pagenotfound.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule, Routes } from '@angular/router';
+import { AppRoutingModule }        from './app-routing.module';
 
 // Decorator
 // Definizione di una funzione utilizzata per "decorare" un altra funzione
@@ -12,14 +16,17 @@ import { HttpClientModule } from '@angular/common/http';
    // delcarations
    // usato per definire i Components/Directives/Pipes che saranno disponibili nel modulo
   declarations: [
-    AppComponent
+    AppComponent,
+    GuestbookComponent,
+    PageNotFoundComponent
   ],
   // imports
   // usato per definire i moduli esterni da importare utilizzati per estendere le funzionalità del modulo corrente
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   // exports
   // usato per definire tutti i Compoents/Directives/Pipes/Modules da rendere disponibili ad altri moduli

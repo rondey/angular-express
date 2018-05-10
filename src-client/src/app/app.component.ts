@@ -2,7 +2,6 @@ import {
   Component, OnChanges, OnInit, DoCheck, AfterContentInit,
   AfterContentChecked, AfterViewInit, AfterViewChecked, SimpleChanges
 } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +9,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnChanges, OnInit, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked {
-  public now: string;
 
-  constructor(client: HttpClient) {
-    client.get('/api/time/now').subscribe((result: {[now: string]: string}) => {
-      this.now = result.now;
-    });
+  constructor() {
   }
 
   ngAfterViewChecked(): void {
