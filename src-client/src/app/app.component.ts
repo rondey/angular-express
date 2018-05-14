@@ -3,46 +3,45 @@ import {
   AfterContentChecked, AfterViewInit, AfterViewChecked, SimpleChanges
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material';
+import { AboutComponent } from './about.component';
+import { GuestbookService } from './guestbook.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnChanges, OnInit, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked {
-  public now: string;
+export class AppComponent {
+  public now: Date;
 
-  constructor(client: HttpClient) {
-    client.get('/api/time/now').subscribe((result: {[now: string]: string}) => {
-      this.now = result.now;
+  constructor(
+    client: HttpClient,
+    private guestbookService: GuestbookService,
+    private matDialog: MatDialog) {
+
+    client.get('/api/time/now').subscribe((result: { [now: string]: string }) => {
+      this.now = result.now ? new Date(result.now) : new Date();
+    }, () => {
+      this.now = new Date();
     });
   }
 
-  ngAfterViewChecked(): void {
-    console.log(`ngAfterViewChecked AppComponent`);
+  public openAbout(text?: string) {
+    this.matDialog.open(AboutComponent, {
+      data: text ? text : 'Made with love by nZo'
+    });
   }
 
-  ngAfterViewInit(): void {
-    console.log(`ngAfterViewInit AppComponent`);
+  public openHelp() {
+    this.openAbout('The answer to any question is 42!');
   }
 
-  ngAfterContentChecked(): void {
-    console.log(`ngAfterContentChecked AppComponent`);
+  public reload() {
+    console.log('Reloading application state');
   }
 
-  ngAfterContentInit(): void {
-    console.log(`ngAfterContentInit AppComponent`);
-  }
-
-  ngDoCheck(): void {
-    console.log(`ngDoCheck AppComponent`);
-  }
-
-  ngOnInit(): void {
-    console.log(`ngOnInit AppComponent`);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(`ngOnChanges AppComponent`);
+  public clear() {
+    this.guestbookService.clear();
   }
 }

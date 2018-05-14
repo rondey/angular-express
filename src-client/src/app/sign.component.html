@@ -1,0 +1,13 @@
+<form [formGroup]="signForm">
+  <mat-form-field>
+    <textarea matInput #inputComment placeholder="Leave a comment" formControlName="comment"></textarea>
+    <mat-hint align="end">{{inputComment.value?.length || 0}}/{{commentMaxLength}}</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput #inputName placeholder="Name" value="" formControlName="name">
+    <mat-hint align="end">{{inputName.value?.length || 0}}/{{nameMaxLength}}</mat-hint>
+  </mat-form-field>
+
+  <button mat-raised-button (click)="sendSign()" [disabled]="!signForm.valid">Sign</button>
+</form>

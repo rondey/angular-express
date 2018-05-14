@@ -1,9 +1,11 @@
 import * as express from 'express';
+import * as bodyParser from 'body-parser';
 import { routes } from './routes';
 
 export const app = express();
 
 app.set("port", process.env.PORT || 3000);
+app.use(bodyParser.json());
 
 // loading api controllers
 for (const route of routes) {
