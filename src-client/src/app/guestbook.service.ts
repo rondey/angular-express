@@ -40,7 +40,6 @@ export class GuestbookService {
                     return true;
                 }),
                 switchMap(() => this.httpClient.get<Array<Guest>>('/api/guestbook/guests')),
-                retry(3),
                 share()
             );
     }

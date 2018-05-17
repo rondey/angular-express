@@ -1,9 +1,9 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>Awesome Guestbook</span>
     <button mat-icon-button (click)="openAbout()">
       <mat-icon aria-label="Love">favorite</mat-icon>
     </button>
+    <span>Awesome Guestbook</span>
     <span class="spacer"></span>
     <span class="date">{{ now | date }}</span>
     <button mat-icon-button [matMenuTriggerFor]="appMenu">

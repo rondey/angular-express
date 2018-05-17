@@ -17,7 +17,7 @@
         "build-client": "cd src-client && npm run build",
         "build": "npm run build-server && npm run build-client",
         "start-server-deb": "tsc && node dist/app.js",
-        "start-client-deb": "cd src-client && ng serve --open",
+        "start-client-deb": "cd src-client && ng serve --open --proxy-config proxy.config.json",
         "start-debug": "npm run start-server-deb | npm run start-client-deb",
         "start": "node dist/app.js"
     },
