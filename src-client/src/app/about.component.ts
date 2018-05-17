@@ -8,6 +8,6 @@ import { MAT_DIALOG_DATA } from '@angular/material';
     styleUrls: ['./about.component.scss']
 })
 export class AboutComponent {
-    constructor(@Inject(MAT_DIALOG_DATA) private data: string) {
+    constructor(@Inject(MAT_DIALOG_DATA) public data: string) {
     }
 }
