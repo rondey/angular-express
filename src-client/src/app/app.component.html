@@ -1,18 +1,1 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <button mat-icon-button (click)="openAbout()">
-      <mat-icon aria-label="Love">favorite</mat-icon>
-    </button>
-    <span>Awesome Guestbook</span>
-    <span class="spacer"></span>
-    <span class="date">{{ now | date }}</span>
-    <button mat-icon-button [matMenuTriggerFor]="appMenu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #appMenu="matMenu">
-      <button mat-menu-item (click)="clear()">Clear</button>
-      <button mat-menu-item (click)="openHelp()">Help</button>
-    </mat-menu>
-  </mat-toolbar-row>
-</mat-toolbar>
 <router-outlet></router-outlet>
