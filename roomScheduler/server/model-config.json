@@ -1,0 +1,58 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "db"
+  },
+  "AccessToken": {
+    "dataSource": "database",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "database",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "database",
+    "public": false
+  },
+  "Room": {
+    "dataSource": "database",
+    "public": true
+  },
+  "Building": {
+    "dataSource": "database",
+    "public": true
+  },
+  "Client": {
+    "dataSource": "database",
+    "public": true
+  },
+  "Event": {
+    "dataSource": "database",
+    "public": true
+  },
+  "Schedule": {
+    "dataSource": "database",
+    "public": true
+  }
+}

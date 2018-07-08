@@ -1,0 +1,198 @@
+<!-- Developed By Davide Antonino Vincenzo Micale -->
+<!-- Il contentitore è il flex container, utile per poter organizzare le dimensioni degli elementi in modo responsive.
+     Con fxLayout definisco sia l'ordine con cui i contenitori dovranno essere visualizzati. Nel caso specifico è stato
+     impostato che i contenitori dovranno essere mostrati uno dopo l'altro in un'unica riga.
+     Con fxLayout.lt-md impongo che la regola deve essere usata nel caso di schermo più piccolo del medio. Nel caso
+     specifico è stato impostato che i contenitori dovranno essere mostrati in un'unica colonna uno
+     dopo l'altro.
+     Con fxLayoutAlign definisco l'allineamento dei contenitori per ciascun asse. Nel caso specifico è stato impostato
+     con space-evenly che distribuisce lo spazio libero in maniera uguale fra i contenitori, mentre nell'asse verticale 
+     è stato impostato con stretch che i contentitori prendessero tutta l'altezza disponibile.
+     Con fxLayoutAlign.lt-md definisco l'allineamento dei contenitori per ciascun asse nel caso di schermo più piccolo
+     del medio. Nel caso specifico è stato impostato con start che per l'asse orizzontale si parte dalla sinistra andando 
+     verso destra e tutto l'eventuale spazio rimanente và a destra, mentre nell'asse verticale è stato impostato con 
+     stretch che i contentitori prendessero tutta l'altezza disponibile -->
+<div class="main-content" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-evenly stretch" fxLayoutAlign.lt-md="start stretch">
+    <!-- Con fxFlex imposto come si dovrà ridimensionare il contenitore. Nel caso specifico, con nogrow il contentitore prenderà lo
+           spazio in grandezza che gli serve. Se c'è altro spazio vuoto disponibile, lui non ne potrà usufruire -->
+    <div fxFlex="nogrow">
+        <!-- Creo una card per contenere i filtri-->
+        <mat-card>
+            <!-- Nell'header inserisco il titolo della card-->
+            <mat-card-header>
+                <h4>Filtri</h4>
+            </mat-card-header>
+            <!-- Nel contenuto inserisco i filtri-->
+            <mat-card-content>
+                <!-- I campi sono inseriti all'interno del form per sfruttare principalmente l'observable offerto dal formGroup che
+                     a ogni modifica effettuata nei campi emette un evento. Con [formGroup] associo il formGroup di nome filtersForm definito 
+                     nel component e lo associo al form -->
+                <form name="filtersForm" [formGroup]="filtersForm">
+                    <div>
+                        <!-- Il primo campo, con stile angular material, è l'eventSchedule che contiene il filtraggio del nome dell'evento -->
+                        <mat-form-field>
+                            <!-- matInput permette di impostare gli stili angular all'elemento. 
+                                Con aria-label indico una descrizione che possa essere mostrata da coloro che usano gli screen reader principalmente.
+                                Con formControlName indico al formGroup con quale nome il campo deve associato. In questo caso, all'interno del
+                                componente, questo campo avrà come nome eventSchedule
+                                Con placeholder indico il testo che deve essere mostrato quando non è stato scritto nulla nel campo di input. Grazie
+                                a Material questo testo non scompare quando si scrive nel campo, bensì si trasforma in etichetta del campo -->
+                            <input type="text" name="eventSchedule" matInput aria-label="Nome dell'evento" placeholder="Nome dell'evento" 
+                                   formControlName="eventSchedule">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <!-- Il secondo campo, con stile angular material, è il dateStart che contiene il filtraggio dell'evento per data d'inizio:
+                             bisognerà mostrare tutti gli eventi che hanno una data di inizio maggiore a quella del dateStart-->
+                        <mat-form-field>
+                            <!-- matInput permette di impostare gli stili angular all'elemento. 
+                                Con [matDatepicker] indico quale sarà il picker che si occuperà di mostrare il calendario e di aggiornare il campo
+                                con la data scelta dal calendario.
+                                Con aria-label indico una descrizione che possa essere mostrata da coloro che usano gli screen reader principalmente.
+                                Con formControlName indico al formGroup con quale nome il campo deve associato. In questo caso, all'interno del
+                                componente, questo campo avrà come nome eventSchedule
+                                Con placeholder indico il testo che deve essere mostrato quando non è stato scritto nulla nel campo di input. Grazie
+                                a Material questo testo non scompare quando si scrive nel campo, bensì si trasforma in etichetta del campo -->
+                            <input name="dateStart" matInput [matDatepicker]="pickerDateStart" aria-label="Intervallo di inizio" 
+                                   placeholder="Intervallo di inizio" formControlName="dateStart">
+                            <!-- mat-datepicker-toggle mostra a schermo l'icona che si occupa di aprire e chiudere il calendario quando ci si
+                                 clicca sopra.
+                                 matSuffix indica che l'elemento và mostrato alla fine del campo
+                                 [for] indica a quale sarà il picker da aprire/chiudere -->
+                            <mat-datepicker-toggle matSuffix [for]="pickerDateStart"></mat-datepicker-toggle>
+                            <!-- mat-datepicker è il calendario. Con #pickerDateStart sto indicando il nome con cui ci si potrà riferire all'elemento
+                                 all'interno del template -->
+                            <mat-datepicker #pickerDateStart></mat-datepicker>
+                        </mat-form-field>
+
+                    </div>
+                    <div>
+                        <!-- Il terzo campo, con stile angular material, è il dateEnd che contiene il filtraggio dell'evento per data di fine:
+                             bisognerà mostrare tutti gli eventi che hanno una data di inizio maggiore a quella del dateEnd-->
+                        <mat-form-field>
+                            <!-- matInput permette di impostare gli stili angular all'elemento. 
+                                Con [matDatepicker] indico quale sarà il picker che si occuperà di mostrare il calendario e di aggiornare il campo
+                                con la data scelta dal calendario.
+                                Con aria-label indico una descrizione che possa essere mostrata da coloro che usano gli screen reader principalmente.
+                                Con formControlName indico al formGroup con quale nome il campo deve associato. In questo caso, all'interno del
+                                componente, questo campo avrà come nome eventSchedule
+                                Con placeholder indico il testo che deve essere mostrato quando non è stato scritto nulla nel campo di input. Grazie
+                                a Material questo testo non scompare quando si scrive nel campo, bensì si trasforma in etichetta del campo -->
+                            <input name="dateEnd" matInput [matDatepicker]="pickerDateEnd" aria-label="Intervallo di fine" placeholder="Intervallo di fine"
+                                formControlName="dateEnd">
+                            <!-- mat-datepicker-toggle mostra a schermo l'icona che si occupa di aprire e chiudere il calendario quando ci si
+                                 clicca sopra.
+                                 matSuffix indica che l'elemento và mostrato alla fine del campo
+                                 [for] indica a quale sarà il picker da aprire/chiudere -->
+                            <mat-datepicker-toggle matSuffix [for]="pickerDateEnd"></mat-datepicker-toggle>
+                            <!-- mat-datepicker è il calendario. Con #pickerDateStart sto indicando il nome con cui ci si potrà riferire all'elemento
+                                 all'interno del template -->
+                            <mat-datepicker #pickerDateEnd></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <!-- matcheckbox permette di mostrare una checkbox in stile material.-->
+                        <mat-checkbox name="conflict" aria-label="Mostra solo gli eventi con conflitti" 
+                                      formControlName="conflict">Mostra solo gli eventi con conflitti</mat-checkbox>
+                    </div>
+                </form>
+                <div>
+                    <!-- Il bottone si occupa di resettare i campi del form. 
+                         Con mat-raised-button indico lo stile del bottone.
+                         Con color indico lo schema di colori che deve possedere il bottone, in questo caso il secondario
+                         Con (click) associo l'evento del click dell'utente del bottone alla funzione reset() presente nello CalendarComponent
+                         Il tag mat-icon permette di mostrare una icona a schermo. Viene passato il nome dell'icona da visualizzare che in 
+                         questo caso è l'icona clear -->
+                    <button mat-raised-button color="secondary" (click)="reset()">
+                        <mat-icon>clear</mat-icon> Reset</button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- Con fxFlex impostato a 0 1 50% indico rispettivamente che il contenitore non usufruirà di eventuale spazio disponibile (non si
+           ingrandirà in presenza di spazio libero), di rimpicciolirsi se è troppo largo da non riuscire ad entrarci e del 50% come 
+           dimensione iniziale (prima della fase di ingrandimento, che in questo caso non è sfruttata da nessuno) -->
+    <div fxFlex="0 1 50%;">
+        <!-- I bottoni possono fare da collegamenti ad altre sezioni dell'app. 
+                Con mat-raised-button indico lo stile del bottone.
+                Con color indico lo schema di colori che deve possedere il bottone, in questo caso il secondario
+                Con routerLink indico al router a quale pagina dell'app ci si dovrà dirigere quando l'utente vi ci clicca
+                Il tag mat-icon permette di mostrare una icona a schermo. Viene passato il nome dell'icona da visualizzare -->
+        <a mat-raised-button color="primary" routerLink="create">
+            <mat-icon>create</mat-icon> Crea Evento</a>
+
+        <!-- Se gli eventi non sono ancora impostati, mostro il componente che si occupa di mostrare lo spinner. Lo lego ad events-->
+        <app-loading [elements]="events"></app-loading>
+        <!-- Devo mostrare una card per ogni evento che l'utente possiede. Si usa *ngFor a cui viene passato un array e per ognuno
+               di esso crea l'elemento. Utilizzando però gli operatori pipe è possibile applicare delle trasformazioni all'array che verrò
+               passato all' *ngFor. È possibile applicare più di una pipe, concatenandoli attraverso l'uso del carattere | . Una pipe può
+               prendere come input non necessariamente array ma più in generale oggetti o variabili semplici. Bisogna indicare 
+               il nome della pipe e opzionalmente possono avere parametri, separati dal carattere : . Oltre alle pipe fornite da Angular,
+               è possibile creare delle pipe custom. In questo caso si usano delle pipe custom. Queste pipe, nello specifico, hanno lo 
+               scopo di filtrare l'array, facendo passare solo gli elementi dell'array che rispettano certi criteri. Il searchfilter 
+               lascia passare solo gli oggetti che presentano in un campo specifico una determinata sottostringa oppure, nel caso di booleani,
+               se il filtro assume valore true, all'ora l'oggetto viene mostrato solo se l'elemento dell'oggetto assume valore anch'esso true.
+               Come parametri in ingresso prende il nome della proprietà da filtrare e la stringa da cercare. Nel nostro caso, all'interno 
+               dell'array di eventi, si vuole cercare nel campo name la sottostringa eventSchedule che si trova eventualmente 
+               all'interno dell'oggetto filters. Grazie al '?', se il filtro dovesse essere nullo, non si verificherebbe un errore
+               JavaScript. 
+               Con la pipe datefilter, anch'essa custom, viene fatto un confronto fra due date. In base all'operatore scelto (uguaglianza,
+               minoranza, maggioranza e combinazioni) si stabilirà se l'elemento farà parte o meno dell'array finale. Il datefilter prende
+               in ingresso il nome della proprietà da filtrare e un oggetto che contiene la data di confronto e l'operatore indicato
+               tramite stringhe. Nel nostro caso viene applicato il filtro alla data d'inizio dell'evento confrontato col corrispettivo
+               filtro. Un evento viene accettato solo se la data d'inizio è maggiore o uguale (gte) rispetto alla data di inizio del filtro.
+               Analogamente viene fatto con la data di fine e il corrispettivo filtro, con la differenza che la data dell'evento deve essere
+               minore o uguale (lte) alla data indicata nel filtro di fine.
+               Con [ngClass] definisco una serie di classi che vengono aggiunti dinamicamente da angular in base a determinati criteri.
+               Nel caso specifico viene inserita la classe success se l'evento non possiede conflitti, viene inserita la classe warning se
+               ci sono conflitti  -->
+        <mat-card *ngFor="let event of events |  
+                              searchfilter: 'name' : filters?.eventSchedule |
+                              datefilter: 'dateStart' : { value : filters?.dateStart, operator : 'gte' } | 
+                              datefilter: 'dateEnd' : { value : filters?.dateEnd, operator : 'lte' } |
+                              searchfilter: 'conflict' : filters?.conflict "
+                    [ngClass]="{ 'success': !event.conflict, 'warning': event.conflict}">
+            <!-- Nell'header inserisco il titolo della card-->
+            <mat-card-header>
+                <!-- Che avrà come valore il nome dell'evento -->
+                <h3>{{event.name}}</h3>
+            </mat-card-header>
+            <!-- Nel contenuto inserisco le date di inizio e fine e i vari pulsanti per interagire con l'evento-->
+            <mat-card-content>
+                <!-- Analogamente con quanto fatto col contenitore principale, imposto un contenitore flex per mostrare date e pulsanti
+                   in modo responsive -->
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-evenly stretch" fxLayoutAlign.lt-md="start stretch">
+                    <!-- Con fxFlex indico che il contenitore usufruirà di eventuale spazio disponibile, di rimpicciolirsi
+                se è troppo largo da non riuscire ad entrarci -->
+                    <div fxFlex>
+                        <div>
+                            <!-- Mostro in grassetto la data d'inizio. Osservare che alla data viene applicata la pipe date che si occupa
+                             di mostrare la data in un formato facilmente comprensibile dalle persone. Il formato date di default è 
+                             il giorno, l'abbreviazione del mese e l'anno-->
+                            <strong>Data di inizio</strong>: {{event.dateStart | date}}
+                        </div>
+                        <div>
+                            <!-- Mostro in grassetto la data di fine. Osservare che alla data viene applicata la pipe date che si occupa
+                             di mostrare la data in un formato facilmente comprensibile dalle persone. Il formato date di default è 
+                             il giorno, l'abbreviazione del mese e l'anno-->
+                            <strong>Data di fine</strong>: {{event.dateEnd | date}}
+                        </div>
+                    </div>
+                    <!-- Con fxFlex indico che il contenitore usufruirà di eventuale spazio disponibile, di rimpicciolirsi
+                se è troppo largo da non riuscire ad entrarci -->
+                    <div fxFlex>
+                        <!-- I bottoni possono fare da collegamenti ad altre sezioni dell'app. 
+                     Con mat-raised-button indico lo stile del bottone.
+                     Con color indico lo schema di colori che deve possedere il bottone, in questo caso il secondario
+                     Con routerLink indico al router a quale pagina dell'app ci si dovrà dirigere quando l'utente vi ci clicca
+                     Il tag mat-icon permette di mostrare una icona a schermo. Viene passato il nome dell'icona da visualizzare -->
+                        <a mat-raised-button color="secondary" routerLink="{{event.id}}/schedules">
+                            <mat-icon>list</mat-icon> Mostra appuntamenti</a>
+                        <a mat-raised-button color="secondary" *ngIf="event.conflict" routerLink="{{event.id}}/schedules/conflicts">
+                            <mat-icon>ballot</mat-icon> Risolvi i conflitti</a>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

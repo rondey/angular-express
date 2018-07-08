@@ -1,0 +1,48 @@
+<!-- Developed By Davide Antonino Vincenzo Micale -->
+<mat-sidenav-container class="sidenav-container">
+  <!-- La mat-sidenav contiene la barra di navigazione laterale. #drawer è la variabile locale che la rappresenta.
+       Con mode si indica il comportamento della barra. Quando lo schermo è piccolo, il drawer si metterà sopra il contenuto,
+       altrimenti verrà mostrato a lato. opened indica se la barra del menù deve essere aperta o meno: quando lo schermo è piccolo,
+       chiudo il menù, mentre se lo schermo è grande il menù resterà aperto
+       -->
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+    <!-- La toolbar del menù avrà il titolo Menù e avrà il colore primario del tema -->
+    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <!-- Qui sono contenuti i link alle varie sezioni del sito, sotto forma di lista -->
+    <mat-nav-list>
+      <!-- I link vengono gestiti dal router. In base al link del routerLink, il router reindirizzerà l'app al giusto componente -->
+      <a mat-list-item routerLink="/">Home</a>
+      <!-- con *ngIf si indica che il link deve comparire solo se la variabile loggedIn è falsa -->
+      <a mat-list-item routerLink="/login" *ngIf="!loggedIn">Login</a>
+      <!-- con *ngIf si indica che il link deve comparire solo se la variabile loggedIn è vera
+           Il percorso conterrà l'id dell'utente -->
+      <a mat-list-item routerLink="/clients/{{ userId }}/events" *ngIf="loggedIn">Eventi</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <!-- Qui sono presenti sia la fascia che sta sopra a ogni pagina dell'app, sia il contenuto della pagina -->
+  <mat-sidenav-content>
+    <!-- La fascia deve assumere il colore primario del tema -->
+    <mat-toolbar color="primary">
+      <!-- Questo è il bottone per aprire la sidebar. aria-label è un attributo che permette a chi usa un assistente per i diversamenti abili
+           di mostrare un messaggio che indichi a cosa serve il bottone. Con la (click), premendo il bottone verrà eseguita la funzione per mostrare
+           o nascondere il menù. *ngIf permette di far apparire il bottone se lo schermo è piccolo -->
+      <button
+        type="button"
+        aria-label="Mostra/nascondi il menù"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <!-- Icona contenuta nel bottone, con la descrizione per i diversamente abili-->
+        <mat-icon aria-label="Icona per mostrare/nascondere il menù">menu</mat-icon>
+      </button>
+      <!-- Bottone che compare nella toolbar col il nome dell'app -->
+      <button class="home" mat-button routerLink="/" aria-label="Home">Room Scheduler</button>
+    </mat-toolbar>
+    <!-- ng-content permette di mostrare gli elementi che sono stati inseriti nel template di AppComponent, all'interno del tag App-Nav -->
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

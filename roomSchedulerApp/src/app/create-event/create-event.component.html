@@ -1,0 +1,267 @@
+<!-- Developed By Davide Antonino Vincenzo Micale -->
+<div class="main-content">
+  <!-- Il mat-horizontal-stepper consente di creare un'interfaccia grafica per gestire una procedura guidata.
+       Viene mostrato un header orizzontale con gli step della procedura guidata.
+       Con linear indico che l'utente deve completare gli step precedenti per passare al successivo
+       Con aria-label indico una etichetta che può essere interpretata da sistemi come screen-reader
+       Con selectionChange indico che a ogni cambio di step deve essere chiamata la funzione selectionChange -->
+  <mat-horizontal-stepper linear="true" #stepper aria-label="Procedura guidata per la creazione di un evento" (selectionChange)="selectionChange()">
+    <!-- mat-step è il tag che indica uno step.
+         Con step-control indico qual'è il form che dovrà essere valido per poter passare allo step successivo.
+         In questo caso è l'eventForm definito nel componente -->
+    <mat-step [stepControl]="eventForm">
+      <!-- Definisco il modulo per la creazione di un evento.
+           Con [formGroup] associo il formGroup di nome eventForm definito nel component e lo associo al form -->
+      <form [formGroup]="eventForm">
+        <!-- Questo permette di definire l'etichetta che verrà mostrata per lo step corrente-->
+        <ng-template matStepLabel>Definisci l'evento</ng-template>
+        <div>
+          <!-- Il primo campo ospiterà il nome dell'evento -->
+          <mat-form-field>
+            <!-- matInput permette di impostare gli stili angular all'elemento. 
+               Con aria-label indico una descrizione che possa essere mostrata da coloro che usano gli screen reader principalmente.
+               Con formControlName indico al formGroup con quale nome il campo essere deve associato. In questo caso, all'interno del
+               componente, questo campo avrà come nome name.
+               Con placeholder indico il testo che deve essere mostrato quando non è stato scritto nulla nel campo di input. Grazie
+               a Material questo testo non scompare quando si scrive nel campo, bensì si trasforma in etichetta del campo.
+               Il required permette di stabilire che il campo è richiesto per proseguire. Si osservi che nel template in realtà il 
+               formControl contiene già il validatore required. È stato inserito il required solo per far in modo che Angular facesse
+               apparire l'asterisco che faccia capire all'utente graficamente che il campo è richiesto. -->
+            <input type="text" name="name" matInput aria-label="Nome dell'evento" placeholder="Nome dell'evento" formControlName="name"
+              required>
+            <!-- Il mat-error permette di mostrare un messaggio quando si verifica un errore. Il messaggio viene mostrato in autonomia da Angular -->
+            <mat-error>
+              <!-- ng-container dà un contenitore fittizio. In questo modo posso mettere il controllo se il campo viene e in caso negativo 
+                   mostrare il messaggio di richiesta compilazione. -->
+              <ng-container *ngIf="eventForm.get('name').invalid">
+                <!-- Se il campo è vuoto mostro l'errore. Si osservi che per mostrare il messaggio si vada nel formControl di name e si
+                     veda la proprietà required se è settata all'interno dell'oggetto errors. Se required esiste, significa che c'è l'errore -->
+                <span *ngIf="eventForm.get('name').errors.required">È
+                  <strong>richiesto</strong> l'inserimento del nome dell'evento</span>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <!-- Il campo ospita l'ora in cui inizierà ciascun appuntamento dell'evento.
+              matInput permette di impostare gli stili angular all'elemento. 
+               Con aria-label indico una descrizione che possa essere mostrata da coloro che usano gli screen reader principalmente.
+               Con formControlName indico al formGroup con quale nome il campo essere deve associato. In questo caso, all'interno del
+               componente, questo campo avrà come nome starting.
+               Con placeholder indico il testo che deve essere mostrato quando non è stato scritto nulla nel campo di input. Grazie
+               a Material questo testo non scompare quando si scrive nel campo, bensì si trasforma in etichetta del campo.
+               Il required permette di stabilire che il campo è richiesto per proseguire. Si osservi che nel template in realtà il 
+               formControl contiene già il validatore required. È stato inserito il required solo per far in modo che Angular facesse
+               apparire l'asterisco che faccia capire all'utente graficamente che il campo è richiesto. -->
+            <input type="text" name="starting" matInput aria-label="Ora d'inizio" placeholder="Ora d'inizio" formControlName="starting"
+              required>
+            <!-- Il mat-error permette di mostrare un messaggio quando si verifica un errore. Il messaggio viene mostrato in autonomia da Angular -->
+            <mat-error>
+              <!-- ng-container dà un contenitore fittizio. In questo modo posso mettere il controllo se il campo viene impostato e in caso negativo 
+                   mostrare il messaggio di richiesta compilazione. -->
+              <ng-container *ngIf="eventForm.get('starting').invalid">
+                <!-- Se il campo è vuoto... -->
+                <span *ngIf="eventForm.get('starting').errors.required">È
+                  <strong>richiesto</strong> l'inserimento dell'ora d'inizio</span>
+                <!-- Se il formato è errato...-->
+                <span *ngIf="eventForm.get('starting').errors.pattern">Il
+                  <strong>formato</strong> è errato. Deve contenere l'ora e i minuti entrambi a due cifre, separati dal carattere
+                  ':'. Esempio: 08:00</span>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <!-- Il campo ospita l'ora in cui si concluderà ciascun appuntamento dell'evento.
+              matInput permette di impostare gli stili angular all'elemento. 
+               Con aria-label indico una descrizione che possa essere mostrata da coloro che usano gli screen reader principalmente.
+               Con formControlName indico al formGroup con quale nome il campo essere deve associato. In questo caso, all'interno del
+               componente, questo campo avrà come nome ending.
+               Con placeholder indico il testo che deve essere mostrato quando non è stato scritto nulla nel campo di input. Grazie
+               a Material questo testo non scompare quando si scrive nel campo, bensì si trasforma in etichetta del campo.
+               Il required permette di stabilire che il campo è richiesto per proseguire. Si osservi che nel template in realtà il 
+               formControl contiene già il validatore required. È stato inserito il required solo per far in modo che Angular facesse
+               apparire l'asterisco che faccia capire all'utente graficamente che il campo è richiesto. -->
+            <input type="text" name="ending" matInput aria-label="Ora di fine" placeholder="Ora di fine" formControlName="ending" required>
+            <!-- Il mat-error permette di mostrare un messaggio quando si verifica un errore. Il messaggio viene mostrato in autonomia da Angular -->
+            <mat-error>
+              <!-- ng-container dà un contenitore fittizio.-->
+              <ng-container *ngIf="eventForm.get('ending').invalid">
+                <!-- Se il campo è vuoto... -->
+                <span *ngIf="eventForm.get('ending').errors.required">È
+                  <strong>richiesto</strong> l'inserimento dell'ora di fine</span>
+                <!-- Se viene impostato l'errore per il validatore di ora di fine maggiore di quella di inizio ...-->
+                <span *ngIf="eventForm.get('ending').errors.validMax">L'ora di fine
+                  <strong>deve essere maggiore</strong> all'ora di inizio dell'evento </span>
+                <span *ngIf="eventForm.get('ending').errors.pattern">Il
+                  <strong>formato</strong> è errato. Deve contenere l'ora e i minuti entrambi a due cifre, separati dal carattere
+                  ':'. Esempio: 08:00</span>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <!-- Il campo indica quale sarà la cadenza con cui verranno creati gli appuntamenti.
+               Tramite selectionChange, ogni volta che l'utente effettua una scelta, viene emesso un evento. Quando ciò si verifica,
+               nel caso specifico, verrà chiamata la funzione changePeriodicity per aggiornare i campi richiesti dal modulo -->
+            <mat-select name="periodicity" placeholder="Con quale cadenza si verifica?" aria-label="Con quale cadenza si verifica l'evento?"
+              formControlName="periodicity" (selectionChange)="changePeriodicity()" required>
+              <!-- Ogni opzione viene definita tramite la map-option, il cui valore se selezionato è dato dalla value -->
+              <mat-option value="0">Seleziona un'opzione</mat-option>
+              <mat-option value="1">Una sola volta</mat-option>
+              <mat-option value="2">Una volta al giorno</mat-option>
+              <mat-option value="3">Una volta alla settimana</mat-option>
+              <mat-option value="4">Una volta al mese</mat-option>
+              <mat-option value="5">Personalizzato</mat-option>
+            </mat-select>
+            <mat-error>
+              <ng-container *ngIf="eventForm.get('periodicity').invalid">
+                <!-- Dal component, viene applicato al campo periodicity una validatura per cui il minimo valore che può essere assunto è 1,
+                     perciò l'utente deve selezionare un'opzione necessariamente. Nel caso in cui l'utente non effettua la selezione, verrà
+                     inviato il seguente messaggio -->
+                <span *ngIf="eventForm.get('periodicity').errors.min">È
+                  <strong>richiesto</strong> l'inserimento della cadenza dell'evento</span>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <!-- Il campo indica quale sarà la prima (eventualmente unica) data in cui si svolgerà l'evento.
+                matInput permette di impostare gli stili angular all'elemento. 
+                Con [matDatepicker] indico quale sarà il picker che si occuperà di mostrare il calendario e di aggiornare il campo
+                con la data scelta dal calendario.
+                Con aria-label indico una descrizione che possa essere mostrata da coloro che usano gli screen reader principalmente.
+                Con formControlName indico al formGroup con quale nome il campo deve associato. In questo caso, all'interno del
+                componente, questo campo avrà come nome dateStart.
+                Con placeholder indico il testo che deve essere mostrato quando non è stato scritto nulla nel campo di input. Grazie
+                a Material questo testo non scompare quando si scrive nel campo, bensì si trasforma in etichetta del campo.
+                Quando la data viene cambiata, viene chiamata con dateChange la funzione refreshDurationValidity, che si occupa di 
+                rieffettuare le validazioni dei campi del modulo   -->
+            <input name="dateStart" matInput [matDatepicker]="pickerDateStart" aria-label="Intervallo di inizio" placeholder="Intervallo di inizio"
+              formControlName="dateStart" (dateChange)="refreshDurationValidity()" required>
+            <!-- mat-datepicker-toggle mostra a schermo l'icona che si occupa di aprire e chiudere il calendario quando ci si
+                clicca sopra.
+                matSuffix indica che l'elemento và mostrato alla fine del campo
+                [for] indica a quale sarà il picker da aprire/chiudere -->
+            <mat-datepicker-toggle matSuffix [for]="pickerDateStart"></mat-datepicker-toggle>
+            <!-- mat-datepicker è il calendario. Con #pickerDateStart sto indicando il nome con cui ci si potrà riferire all'elemento
+                all'interno del template -->
+            <mat-datepicker #pickerDateStart></mat-datepicker>
+            <mat-error>
+              <ng-container *ngIf="eventForm.get('dateStart').invalid">
+                <!-- Se il campo è vuoto... -->
+                <span *ngIf="eventForm.get('dateStart').errors.required">È
+                  <strong>richiesto</strong> l'inserimento della data d'inizio dell'evento</span>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- Questo contenitore fittizio di Angular viene mostrato con *ngIf se la variabile showDuration del componente è true, altrimenti
+               il contenitore non viene mostrato. Viene impostato a true qualora la cadenza dell'evento non sia occasionale -->
+        <ng-container *ngIf="showDuration">
+          <div>
+            <mat-form-field>
+              <!-- Il campo serve per stabilire la data dell'ultimo appuntamento in cui si svolgerà l'evento. Si terrà comunque conto
+                    del tipo di occasionalità: se ad esempio è mensile e il giorno di fine non è un "multiplo" di 30, si procederà a terminare
+                    l'evento con il primo appuntamento mensile che precede la data di fine.
+                    Al cambio della data, verrà rieffettuata la procedura di validazione. Questo permette di verificare che uno solo fra i campi
+                    dateEnd e hours debba essere riempitoe che la data di fine deve essere maggiore della data di inizio -->
+              <input name="dateEnd" matInput [matDatepicker]="pickerDateEnd" aria-label="Intervallo di fine" placeholder="Intervallo di fine"
+                formControlName="dateEnd" (dateChange)="refreshDurationValidity()">
+              <!-- mat-datepicker-toggle mostra a schermo l'icona che si occupa di aprire e chiudere il calendario quando ci si
+                          clicca sopra.
+                          matSuffix indica che l'elemento và mostrato alla fine del campo
+                          [for] indica a quale sarà il picker da aprire/chiudere -->
+              <mat-datepicker-toggle matSuffix [for]="pickerDateEnd"></mat-datepicker-toggle>
+              <!-- mat-datepicker è il calendario. Con #pickerDateStart sto indicando il nome con cui ci si potrà riferire all'elemento
+                          all'interno del template -->
+              <mat-datepicker #pickerDateEnd></mat-datepicker>
+              <!-- Il mat-error permette di mostrare un messaggio quando si verifica un errore. Il messaggio viene mostrato in autonomia da Angular -->
+              <mat-error>
+                <!-- ng-container dà un contenitore fittizio. In questo modo posso mettere il controllo se l'email è invalida e in caso affermativo mostrare
+                    uno dei due messaggi-->
+                <ng-container *ngIf="eventForm.get('dateEnd').invalid">
+                  <!-- Se la data di fine evento è minore della data di inizio... -->
+                  <span *ngIf="eventForm.get('dateEnd').errors.validMax">La data di fine
+                    <strong>deve essere maggiore o uguale</strong> alla data di inizio dell'evento </span>
+                </ng-container>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <!--Il campo permette di indicare quante ore in totale durerà l'evento. Il server procederà a creare un appuntamento fino a quando non
+                    un numero totale di ore pari o superiore ad hours. Ogni volta che viene cambiato l'orario, verrà chiamata la funzione per verificare
+                    la validità dei campi. -->
+              <input type="number" name="hours" matInput aria-label="Ore di durata dell'evento" placeholder="Ore dell'evento" formControlName="hours"
+                (change)="refreshDurationValidity()">
+            </mat-form-field>
+            <!-- Il mat-error permette di mostrare un messaggio quando si verifica un errore. Mentre i precedenti mat-error erano legati al singolo campo,
+                   questo è stato impostato in modo da raggruppare i messaggi di errore di dateEnd e hours per cui o entrambi i campi sono stati impostati
+                   oppure nessuno dei due è impostato. Il controllo *ngIf verifica che il campo dateEnd sia invalido (se l'errore è legato a quanto detto
+                   pocanzi, sicuramente sarà invalido anche hours), che il campo dateEnd e/o hours sono stati toccati dall'utente (per esempio, l'utente
+                   clicca nel campo ma non imposta alcun valore ed esce dal campo) e se questi casi si verificano mostrerà il contenitore degli errori.
+                   -->
+            <mat-error *ngIf="eventForm.get('dateEnd').invalid && (eventForm.get('dateEnd').touched 
+                          || eventForm.get('hours').touched)" class="subnotification">
+              <!-- Nel caso in cui l'errore sia dovuto a entrambi i campi impostati... -->
+              <span *ngIf="eventForm.get('dateEnd').errors.duration">È
+                <strong>richiesto uno fra</strong> data di fine dell'evento o ore dell'evento</span>
+            </mat-error>
+          </div>
+          <!-- Il seguente mostrerà i giorni della settimana, a condizione che la variabile showDays sia impostata a true, cioè qualora venga scelta
+                 la modalità personalizzata, per scegliere i giorni in cui verranno creati i vari appuntamenti.-->
+          <div *ngIf="showDays">
+            <!-- Il mat-checkbox consente la creazione di un checkbox con lo stile grafico Angular.
+                   Quando viene messa o levata la spunta in uno dei checkbox, viene effettuata l'aggiornamento della validità dei campi. In tal caso,
+                   serve a verificare almeno uno dei campi venga selezionato -->
+            <mat-checkbox name="monday" aria-label="Lunedì" formControlName="monday" (change)="refreshDurationValidity()">Lunedì</mat-checkbox>
+            <mat-checkbox name="tuesday" aria-label="Martedì" formControlName="tuesday" (change)="refreshDurationValidity()">Martedì</mat-checkbox>
+            <mat-checkbox name="wednesday" aria-label="Mercoledì" formControlName="wednesday" (change)="refreshDurationValidity()">Mercoledì</mat-checkbox>
+            <mat-checkbox name="thursday" aria-label="Giovedì" formControlName="thursday" (change)="refreshDurationValidity()">Giovedì</mat-checkbox>
+            <mat-checkbox name="friday" aria-label="Venerdì" formControlName="friday" (change)="refreshDurationValidity()">Venerdì</mat-checkbox>
+            <mat-checkbox name="saturday" aria-label="Sabato" formControlName="saturday" (change)="refreshDurationValidity()">Sabato</mat-checkbox>
+            <mat-checkbox name="sunday" aria-label="Domenica" formControlName="sunday" (change)="refreshDurationValidity()">Domenica</mat-checkbox>
+          </div>
+          <!-- Il mat-error è in questo caso legato a tutti i checkbox: qualora il primo checkbox fosse invalido (e in tal caso lo saranno sicuramente
+                 anche tutti gli altri) verrà creato il contenitore -->
+          <mat-error *ngIf="eventForm.get('monday').invalid" class="subnotification">
+            <!-- Nel caso non ci siano giorni impostati.... -->
+            <span *ngIf="eventForm.get('monday').errors.noDays">È
+              <strong>richiesto almeno</strong> un giorno della settimana</span>
+          </mat-error>
+        </ng-container>
+      </form>
+      <div>
+        <!-- Bottone per passare allo step successivo, grazie al matStepperNext -->
+        <button mat-raised-button color="primary" matStepperNext>Avanti</button>
+      </div>
+    </mat-step>
+    <!-- Con completed indico che lo step si può considerare concluso se viene impostato l'id della stanza dell'evento da creare. 
+         Lo step si occupa di far scegliere all'utente la stanza nel quale far svolgere gli appuntamenti-->
+    <mat-step [completed]="eventSchedule.roomId > 0">
+      <ng-template matStepLabel>Seleziona l'aula</ng-template>
+      <!-- Richiamo il componente app-room, al quale passo in input la data di inizio dell'evento, l'ora di inizio, fine dell'appuntamento,
+           e ricevo in output un evento ogni qual volta venga selezionata una stanza -->
+      <app-room [date]="eventSchedule.dateStart" [starting]="eventSchedule.starting" [ending]="eventSchedule.ending" 
+                (roomId)="onRoomSelected($event)"></app-room>
+      <div>
+        <!-- Bottone per passare allo step precedente, grazie al matStepperPrevious -->
+        <button mat-raised-button color="primary" matStepperPrevious>Indietro</button>
+        <!-- Quando si clicca sul bottone, parte la funzione checkLastStep che si occupa di mostrare a schermo un messaggio nel caso
+             in cui non sia stata selezionata alcuna stanza -->
+        <button mat-raised-button color="primary" matStepperNext (click)="checkLastStep()">Avanti</button>
+      </div>
+    </mat-step>
+    <!-- L'ultimo step consiste nel richiedere all'utente di premere sul pulsante per effettuare il salvataggio -->
+    <mat-step>
+      <ng-template matStepLabel>Salva</ng-template>
+      <p>Per concludere la procedura, clicca sul pulsante</p>
+      <div>
+        <!-- La proprietà HTML disabled dipenderà da saved, variabile angular. In questo modo, se l'evento è già stato salvato, 
+             o in fase di salvataggio l'utente non potrà più cliccarci sopra-->
+        <button mat-raised-button color="primary" (click)="save()" [disabled]="disableSave">Salva l'evento</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

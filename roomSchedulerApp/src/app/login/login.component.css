@@ -1,0 +1,21 @@
+/* Developed By Davide Antonino Vincenzo Micale */
+.login{
+    width:80%;
+    max-width:400px;
+    margin:auto;
+    margin-top: 50px;
+}
+
+.mat-card-content {
+    padding: 40px;
+}
+
+.form-container > form > * {
+    width: 100%;
+}
+
+.mat-spinner {
+    margin: auto;
+    margin-top: 41px;
+}
+  

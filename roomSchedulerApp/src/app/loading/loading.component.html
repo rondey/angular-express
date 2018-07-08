@@ -1,0 +1,5 @@
+<!-- Developed By Davide Antonino Vincenzo Micale -->
+<!-- Se gli elementi sono undefined, quindi non è ancora stato ricevuto presumibilmente dal service l'array, mostro lo spinner-->
+<mat-spinner *ngIf="elements === undefined" diameter="40"></mat-spinner>
+<!-- Se gli elementi sono null, mostro il relativo messaggio-->
+<mat-card *ngIf="elements === null">Nessun elemento disponibile</mat-card>

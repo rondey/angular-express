@@ -1,0 +1,13 @@
+<!-- Developed By Davide Antonino Vincenzo Micale -->
+<!-- Qui sarà contenuto il titolo della dialog -->
+<h1 mat-dialog-title>{{data.title}}</h1>
+<!-- Il container conterrà il messaggio della dialog -->
+<div mat-dialog-content>
+  <p>{{data.message}}</p>
+</div>
+<!-- Qui sono contenuti i bottoni della dialog-->
+<div mat-dialog-actions>
+  <!-- Inserisco il solo bottone di conferma. Viene effettuato un binding sul click del bottone che scatena la chiamata alla funzione di chiusura
+       del bottone -->
+  <button mat-button (click)="close()">{{data.button}}</button>
+</div>

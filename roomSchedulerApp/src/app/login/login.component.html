@@ -1,0 +1,53 @@
+<!-- Developed By Davide Antonino Vincenzo Micale -->
+<mat-card class="login">
+  <mat-card-header>
+      <h4>Login</h4>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="form-container">
+      <!-- Con #f="ngForm" Angular assegna alla variabile del template f la direttiva NgForm che permette di tenere traccia dei
+           valori assunti dagli input del form, ma soprattutto di osservarne lo stato. Ho così a disposizione la variabile valid
+           che mi indica se il form è valido.
+           Con (ngSubmit), quando il form verrà sottomesso, se il form è valido verrà chiamata la funzione onSubmit(). 
+           novalidate indica al Browser di non usare le proprie routine di validazione. -->
+        <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" novalidate>
+          <!-- Il mat-form-field è un componente che ha lo scopo di applicare gli stili ai componenti che stanno al suo interno -->
+          <mat-form-field>
+            <!-- MatInput è una direttiva di Angular per far intendere che l'elemento deve ricevere gli stili Material.
+                 Con [(ngModel)] si ha il binding a due vie: il contenuto viene inviato al modello login nella proprietà email.
+                 Oltre a poter essere modificato il contenuto da Angular, quest'ultimo può effettuare le validazioni (nel nostro caso, col required 
+                 è richiesto che il campo non sia vuoto) ed applicare delle classi all'input, e molto altro.
+                 Per verificare che il contenuto dell'input sia effettivamente una email, non basta impostare il type a email, devo anche aggiungere email.
+                 Per poter distinguere la tipologia di errore e mostrare il messaggio d'errore corretto, mi serve la variabile locale al template email -->
+            <input type="email" name="email" matInput placeholder="Email" [(ngModel)]="login.email" #email="ngModel" email required>
+            <!-- Il mat-error permette di mostrare un messaggio quando si verifica un errore. Il messaggio viene mostrato in autonomia da Angular -->
+            <mat-error>
+              <!-- ng-container dà un contenitore fittizio. In questo modo posso mettere il controllo se l'email è invalida e in caso affermativo mostrare
+                   uno dei due messaggi-->
+              <ng-container *ngIf="email.invalid">
+                <!-- Se il campo è vuoto... -->
+                <span *ngIf="email.errors.required">È <strong>richiesto</strong> l'inserimento della email</span>
+                <!-- Se il campo non contiene una email... -->
+                <span *ngIf="email.errors.email">È <strong>richiesto</strong> un indirizzo email valido</span>
+              </ng-container>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <!-- Effettuo il binding del campo password al campo password del modello -->
+            <input type="password" name="password" matInput placeholder="Password" [(ngModel)]="login.password"  required>
+            <mat-error>
+              È <strong>richiesto</strong> l'inserimento della password
+            </mat-error>
+          </mat-form-field>
+          <!-- Creo un bottone che sia elevato dallo sfondo e che assuma il colore primario del tema
+               Lego la proprietà disabled alla variabile inProgress del componente, in modo che se il login è in corso, il bottone venga disabilitato.
+               Quando la procedura di login termina, il bottone sarà nuovamente riabilitato -->
+          <button mat-raised-button color="primary" [disabled]="inProgress">Login</button>
+          <!-- Analogamente, lo spinner che mostra che il login è in corso, in attesa di risposta dal server, esso viene mostrato solo se il login 
+               è in corso. Imposto il diametro dello spinner di 40 pixel -->
+          <mat-spinner *ngIf="inProgress" diameter="40"></mat-spinner>
+        </form>
+    </div>
+      
+  </mat-card-content>
+</mat-card>

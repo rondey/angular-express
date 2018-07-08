@@ -1,0 +1,47 @@
+/* Developed By Davide Antonino Vincenzo Micale */
+/* Necessari affinchè il contenuto dell'app prenda tutta l'altezza, altrimenti prenderà l'altezza che necessita, lasciando uno spazio bianco */
+html, body{
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+mat-card{
+    margin-bottom: 15px;
+}
+
+.main-content{
+    margin: 15px;
+    height: 80%;
+}
+
+.main-content > * {
+    margin: inherit;
+}
+
+mat-form-field{
+    margin-right: 15px;
+}
+
+mat-checkbox{
+    margin: 5px;
+}
+
+.subnotification{
+    font-size: 75%;
+}
+
+button.mat-raised-button, a.mat-raised-button {
+    margin:5px;
+}
+
+.success {
+    background-color: #d4edda;
+}
+
+.warning {
+    background-color: #fff3cd;
+}

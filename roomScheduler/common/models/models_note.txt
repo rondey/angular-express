@@ -1,0 +1,11 @@
+Attenzione: MySql non riesce a gestire colonne con indice unique, di tipo VARCHAR e tabelle in InnoDB che abbiano una dimensione superiore a 191 caratteri. È dunque necessario imporre nel relativo file di JSON:
+
+"mysql": {
+	"dataType": "VARCHAR",
+	"dataLength": 191
+}
+
+Osservare che il dataType è obbligatorio, altrimenti la dataLength non verrà settata.
+
+Di default il metodo PUT si comporta in modo diverso rispetto allo standard, aggiornando i valori delle singole proprietà,
+lasciando inalterate le proprietà che non vengono coinvolte dalla chiamata. Con replaceOnPUT messo a true, si impone al server di seguire gli standard. 

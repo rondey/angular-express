@@ -1,0 +1,88 @@
+{
+  "name": "Room",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "replaceOnPUT": true,
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "index": {
+        "unique": true
+      },
+      "mysql": {
+        "dataType": "VARCHAR",
+        "dataLength": 191
+      }
+    },
+    "capacity": {
+      "type": "number",
+      "required": true
+    },
+    "wifi": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    },
+    "socket": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    },
+    "ethernet": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    },
+    "computer": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    },
+    "interactiveWhiteboard": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "building": {
+      "type": "belongsTo",
+      "model": "Building",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "schedules": {
+      "type": "hasMany",
+      "model": "Schedule",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}
